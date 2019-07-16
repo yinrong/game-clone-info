@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="style.css"/>
+        <script src="jquery.js"></script>
+        <script src="g_hero.js"></script>
+    </head>
+    <body>
+        <script>
+
+function draw(parent, data) {
+    let entry
+        if (parent === null) {
+            entry = $('<div class="root"/>')
+                .appendTo($('body'))
+        } else {
+
+            entry = $('<div class="entry"/>')
+                .appendTo(parent)
+        }
+    let label = $('<span class="label"/>')
+        .html(data.label)
+        .appendTo(entry)
+        let attr = ATTR[data.label]
+        if (attr) {
+            label.css('background-color', attr.bgcolor)
+        }
+    if (!data.children) {
+        return
+    }
+    let branch = $('<div class="branch"/>')
+        .appendTo(entry)
+        for (let child of data.children) {
+            draw(branch, child)
+        }
+}
+
+let ATTR = {
+    c1: {
+        bgcolor: 'yellow',
+    },
+}
+
+$(() => {
+    for (let h in g_hero) {
+        draw(null, g_hero[h])
+    }
+})
+        </script>
+    </body>
+</html>
