@@ -26,13 +26,12 @@ function draw(parent, data) {
         .appendTo(entry)
 
     // exclude *N from hero name
-    let hero_name = data.label.replace(/\*\d+$/, '')
 
-    if (g_color[hero_name]) {
-        label.css('background-color', g_color[hero_name])
+    if (g_color[data.name]) {
+        label.css('background-color', g_color[data.name])
     }
 
-    let mydate = g_date[hero_name + '.' + data.level]
+    let mydate = g_date[data.name + '.' + data.level]
     if (mydate) {
         let foot = $('<div class="foot"/>')
             .html(mydate)
@@ -50,7 +49,48 @@ function draw(parent, data) {
         }
 }
 
+function date2int(d) {
+    let a = d.split('-')
+    return a[0] * 365 + a[1] * 30 + a[2] * 1
+    //return a[0] * 1
+}
+
+function findDateFromHeroInfo(d) {
+    let x = g_date[d.name + '.' + d.level]
+    if (x) {
+        let i = date2int(x) / d.level
+        console.log(d.level, x, i)
+        return i
+    }
+    if (!d.children) {
+        return -1
+    }
+    for (let c of d.children) {
+        let i = findDateFromHeroInfo(c)
+        if (i !== -1) {
+            return i
+        }
+    }
+    return -1
+}
+
 $(() => {
+    
+    g_hero.sort( (a, b) => {
+        let da = findDateFromHeroInfo(a)
+        let db = findDateFromHeroInfo(b)
+        if (da === -1 && db === -1) {
+            return 0
+        }
+        if (da === -1) {
+            return 1
+        }
+        if (db === -1) {
+            return -1
+        }
+        return da - db
+    })
+
     for (let h of g_hero) {
         draw(null, h)
     }

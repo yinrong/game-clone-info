@@ -112,18 +112,28 @@ let txt = `
     console.log(reds)
 
     g_hero = []
+    function getNameFromLabel(label) {
+        return label.replace(/\*\d+$/, '')
+    }
+
     for (let red in reds) {
         let d = {}
         d.label = red
+        d.name = getNameFromLabel(red)
         d.level = 3
         d.children = []
         for (let yellow_purples of reds[red]) {
             let z = {
                 label: yellow_purples[0],
+                name: getNameFromLabel(yellow_purples[0]),
                 level: 2,
             }
             let purples = yellow_purples.slice(1)
-                .map(x => ({label: x, level: 1}) )
+                .map(x => ({
+                    label: x,
+                    name: getNameFromLabel(x),
+                    level: 1,
+                }) )
             if (purples.length > 0) {
                 z.children = purples
             }
@@ -133,4 +143,22 @@ let txt = `
     }
     console.log(g_hero)
     
+    function getLabels(o) {
+        if (o.name) {
+            if (!debug_all_heros[o.name]) {
+                debug_all_heros[o.name] = 1
+            }
+        }
+        if (o.children) {
+            for (let child of o.children) {
+                getLabels(child)
+            }
+        }
+    }
+
+    let debug_all_heros = {}
+    for (let h of g_hero) {
+        getLabels(h)
+    }
+    console.log('all_heros:', Object.keys(debug_all_heros).join(' '))
 })()

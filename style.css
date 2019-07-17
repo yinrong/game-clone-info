@@ -91,9 +91,9 @@ body {
 .label {
   display: block;
   min-width: 150px;
-  padding: 5px 10px;
+  padding: 5px 15px;
   line-height: 20px;
-  text-align: center;
+  text-align: left;
   border: 2px solid #eee9dc;
   border-radius: 5px;
   position: absolute;
@@ -103,20 +103,21 @@ body {
 }
 
 .foot {
+    background-color: white;
     background-image: url(award.png);
-    background-size: 20px;
+    background-size: 16px;
     background-repeat: no-repeat;
-    background-position-x: 80px;
+    background-position-x: -20px;
     background-origin: content-box;
-    padding-right: 20px;
+    padding-left: 20px;
     position: absolute;
     z-index: 10;
-    right: 0;
-    bottom: 0;
+    right: -30px;
+    bottom: -5px;
     height: 15px;
     width: 100px;
-    text-align: right;
-    font-size: 12px;
+    text-align: left;
+    font-size: 15px;
     color: red;
     font-weight: 600;
 }
