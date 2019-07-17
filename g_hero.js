@@ -83,7 +83,7 @@ let txt = `
                 cur_k = cells[0]
                 reds[cur_k] = []
             }
-            reds[cur_k].push(cells.slice(1))
+            reds[cur_k].push(cells.slice(1).filter(x => x.length > 0))
         })
 
     /* target format:
@@ -111,20 +111,25 @@ let txt = `
     */
     console.log(reds)
 
-    g_hero = {}
+    g_hero = []
     for (let red in reds) {
         let d = {}
         d.label = red
+        d.level = 3
         d.children = []
         for (let yellow_purples of reds[red]) {
-            let purples = yellow_purples.slice(1)
-                .map(x => { return {label: x} })
-            d.children.push({
+            let z = {
                 label: yellow_purples[0],
-                children: purples,
-            })
+                level: 2,
+            }
+            let purples = yellow_purples.slice(1)
+                .map(x => ({label: x, level: 1}) )
+            if (purples.length > 0) {
+                z.children = purples
+            }
+            d.children.push(z)
         }
-        g_hero[red] = d
+        g_hero.push(d)
     }
     console.log(g_hero)
     

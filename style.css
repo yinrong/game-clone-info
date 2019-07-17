@@ -37,7 +37,7 @@ body {
 
 .entry {
   position: relative;
-  min-height: 60px;
+  min-height: 40px;
 }
 .entry:before {
   content: "";
@@ -102,3 +102,21 @@ body {
   margin-top: -15px;
 }
 
+.foot {
+    background-image: url(award.png);
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position-x: 80px;
+    background-origin: content-box;
+    padding-right: 20px;
+    position: absolute;
+    z-index: 10;
+    right: 0;
+    bottom: 0;
+    height: 15px;
+    width: 100px;
+    text-align: right;
+    font-size: 12px;
+    color: red;
+    font-weight: 600;
+}
